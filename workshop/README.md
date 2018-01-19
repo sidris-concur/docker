@@ -10,7 +10,7 @@ The latest Coding Dojo Vagrant box is available from https://github.concur.com/s
 
 For the following examples assume that the Vagrant project project will be cloned into the `~/projects` directory.
 
-### Follow these instructions if you have NOT run the Coding Dojo Vagrant box before
+### If you have NOT run the Coding Dojo Vagrant box before
 
 Clone the Coding Dojo Vagrant box project:
 
@@ -27,7 +27,7 @@ $ vagrant up
 ```
 
 
-### Follow these instructions if you have run the Coding Dojo Vagrant box before
+### If you have run the Coding Dojo Vagrant box before
 
 Pull the project to get latest:
 
@@ -44,6 +44,13 @@ $ vagrant provision
 ```
 
 Re-provisioning the Vagrant box is necessary to ensure that the provisioning scripts are run again since they may have been updated.
+
+Start the Coding Dojo Vagrant box if necessary:
+
+```
+$ cd ~/projects/vagrant
+$ vagrant up
+```
 
 ## 2. Connect to the Vagrant box
 
