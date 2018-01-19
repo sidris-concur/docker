@@ -61,7 +61,7 @@ Run the following command from inside the Coding Dojo Vagrant box:
 $ cd ~
 $ mkdir projects
 $ cd projects
-$ git clone git@github.concur.com:sidris/docker.git
+$ git clone https://github.com/sidris-concur/docker.git
 ```
 
 ## 4. Build the App
