@@ -26,6 +26,7 @@ $ cd ~/projects/vagrant
 $ vagrant up
 ```
 
+More details can be found here: https://github.concur.com/sidris/vagrant/tree/master/workshop
 
 ### If you have run the Coding Dojo Vagrant box before
 
@@ -94,6 +95,12 @@ $ cd ~/projects/docker
 $ java -jar build/libs/helloworld-0.1.0.jar
 ```
 
+You should be able to see output the response from the service by going to [http://localhost:5000](http://localhost:5000), or by running the following command:
+
+```
+$ curl http://localhost:5000
+```
+
 ### 4.2 Build the Docker Image
 
 Now that the jar file is ready let's package it as a Docker image.
@@ -121,7 +128,7 @@ $ docker image ls
 The output should look something like this:
 
 	REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-	helloimg            latest              2222b16beab5        13 seconds ago      96.5MB
+	helloimg            latest              83b937a0099c        1 second ago        96.5MB
 	openjdk             8-jre-alpine        b1bd879ca9b3        8 days ago          82MB
 
 ## 5. Run the App
@@ -133,14 +140,14 @@ Now let's run the application from the Docker image we just created.
 Run the following command to run an instance of the newly created image:
 
 ```
-$ docker run --name hello -d -p 80:5000 helloimg
+$ docker run --name hello -d -p 8080:5000 helloimg
 ```
 
 * The `-d` flag runs the application detached in the background.
 * The `-p` flag maps the machine port to the container port. This was done to illustrate the difference between what we `EXPOSE` and within the `Dockerfile` and what we `publish` using Docker.
 * The `--name` flag is used to assign a name to the container. This name can be used when referring to this container using Docker commands.
 
-NOTE: The above command will return a long container id and return you to the terminal.
+__NOTE__: The above command will return a long container id and return you to the terminal.
 
 ### 5.2. List running Docker containers
 
@@ -152,8 +159,14 @@ $ docker container ls
 
 The output should look something like this:
 
-	CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                            NAMES
-	fe56cfa5c5f9        helloimg            "java -jar hellowo..."   About a minute ago   Up About a minute   8080/tcp, 0.0.0.0:80->5000/tcp   hello
+	CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                              NAMES
+	0991f7848e38        helloimg            "java -jar helloworl…"   7 seconds ago       Up 6 seconds        8080/tcp, 0.0.0.0:8080->5000/tcp   hello
+
+You should be able to see output the response from the service by going to [http://localhost:8080](http://localhost:8080), or by running the following command:
+
+```
+$ curl http://localhost:8080
+```
 
 ### 5.3. Check the Container Logs
 
@@ -171,7 +184,7 @@ Run the following command to connect to the running container and execute an int
 $ docker exec -it hello /bin/sh
 ```
 
-NOTE: the base image for our App is the lightweight Alpine Linux and it doesn't have the `bash` shell installed. Attempting to connect using `/bin/bash` would cause an error.
+__NOTE__: the base image for our App is the lightweight Alpine Linux and it doesn't have the `bash` shell installed. Attempting to connect using `/bin/bash` would cause an error.
 
 ### 5.5. Stop the Container
 
@@ -207,8 +220,8 @@ $ docker container ls -a
 
 The output should look something like this:
 
-	CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS               NAMES
-	fe56cfa5c5f9        helloimg            "java -jar hellowo..."   2 minutes ago       Exited (143) 5 seconds ago                       hello
+	CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS               NAMES
+	0991f7848e38        helloimg            "java -jar helloworl…"   4 minutes ago       Exited (143) 13 seconds ago                       hello
 
 ## 6. Share the Docker Image
 
@@ -245,8 +258,8 @@ $ docker image ls
 The output should look something like this:
 
 	REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-	helloimg            latest              2222b16beab5        3 minutes ago       96.5MB
-	sidris/hello        0.1.0               2222b16beab5        3 minutes ago       96.5MB
+	helloimg            latest              83b937a0099c        7 minutes ago       96.5MB
+	sidris/hello        0.1.0               83b937a0099c        7 minutes ago       96.5MB
 	openjdk             8-jre-alpine        b1bd879ca9b3        8 days ago          82MB
 
 ### 6.3. Push the Docker image to the Registry
@@ -257,7 +270,7 @@ Run the following command to push the Docker image to the registry:
 $ docker push sidris/hello:0.1.0
 ```
 
-Since no hostname was provided in our tag the image is pushed to the Docker Public Regsitry. To view the published image go to https://hub.docker.com/r/sidris/hello/.
+Since no hostname was provided in our tag the image is pushed to the Docker Public Regsitry. To view the published image go to https://hub.docker.com/r/sidris/hello/tags/.
 
 ### 7. Pull and run the Docker Image from the Remote Repository
 
@@ -266,7 +279,17 @@ Once published the Docker image can now be run by any other users, or on any mac
 Run the following command to pull the Docker image:
 
 ```
-$ docker run --name hello -d -p 80:5000 sidris/hello:0.1.0
+$ docker run --name hello -d -p 8080:5000 sidris/hello:0.1.0
 ```
 
 No matter where `docker run` executes, it pulls the image, along with the base image and runs the application.
+
+__NOTE__: If you want to run the above command on the same machine you will first need to delete the existing images already on your machine. You will also need to stop any running containers that use the images.
+
+Run the following command to delete the images:
+```
+$ docker container stop hello
+$ docker container rm hello
+$ docker image rm helloimg
+$ docker image rm sidris/hello:0.1.0 
+```
