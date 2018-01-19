@@ -8,27 +8,33 @@ However, all instructions starting from step 3 can be run on any machine that ha
 
 The latest Coding Dojo Vagrant box is available from https://github.concur.com/sidris/vagrant.
 
-### 1.1. Get the latest Coding Dojo Vagrant box code from GitHub
-
 For the following examples assume that the Vagrant project project will be cloned into the `~/projects` directory.
 
-Clone the project:
+### Follow these instructions if you have NOT run the Coding Dojo Vagrant box before
+
+Clone the Coding Dojo Vagrant box project:
 
 ```
 $ cd ~/projects
 $ git clone git@github.concur.com:sidris/vagrant.git
 ```
 
-Or if already cloned, pull the project to get latest:
+Start the Coding Dojo Vagrant box:
+
+```
+$ cd ~/projects/vagrant
+$ vagrant up
+```
+
+
+### Follow these instructions if you have run the Coding Dojo Vagrant box before
+
+Pull the project to get latest:
 
 ```
 $ cd ~/projects/vagrant
 $ git pull
 ```
-
-### 1.2. Provision the Vagrant box
-
-Make sure that the Vagrant box is provisioned properly. This is necessary to ensure that the provisioning scripts are run again since they may have been updated.
 
 Run the following command to provision the Vagrant box:
 
@@ -37,12 +43,7 @@ $ cd ~/projects/vagrant
 $ vagrant provision
 ```
 
-### 1.3. Start Vagrant box if necessary
-
-```
-$ cd ~/projects/vagrant
-$ vagrant up
-```
+Re-provisioning the Vagrant box is necessary to ensure that the provisioning scripts are run again since they may have been updated.
 
 ## 2. Connect to the Vagrant box
 
