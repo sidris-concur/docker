@@ -1,8 +1,10 @@
-# Coding Dojo Docker example
+# Coding Dojo Docker Workshop
 
 This project contains a simple hello world Java web service that can be built and deployed in a Docker container. 
 
 The project contains a `Dockerfile` that can be used to build the Docker container.
+
+The full workshop script and slides can be found here: https://github.com/sidris-concur/docker/tree/master/workshop
 
 # Getting Started
 
